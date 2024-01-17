@@ -8,6 +8,10 @@ faker = Faker()
 
 if __name__ == '__main__':
     with app.app_context():
+        Author.query.delete()
+        Publisher.query.delete()
+        Book.query.delete()
+
         print("Seeding database...")
         
         author1 = Author(name='JK Rowling', pen_name='JK')

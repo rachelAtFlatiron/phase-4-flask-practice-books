@@ -10,6 +10,9 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
+# export FLASK_APP=app.py
+# export FLASK_RUN_PORT=5555
+
 # write your models here!
 class Author(db.Model, SerializerMixin):
     __tablename__ = "authors"
@@ -18,10 +21,10 @@ class Author(db.Model, SerializerMixin):
     name = db.Column(db.String, nullable=False)
     pen_name = db.Column(db.String)
 
-    books = db.relationship('Book', back_populates='author')
+    books = db.relationship('Book', back_populates='author', cascade='all, delete')
     publishers = association_proxy('books', 'publisher')
 
-    serializer = ('-books.author', '-publishers.authors')
+    serialize_rules = ('-books.author', '-publishers.authors')
 
     def __repr__(self):
         return f'<Author id={self.id} name={self.name} pen_name={self.pen_name} />'
@@ -61,6 +64,15 @@ class Book(db.Model, SerializerMixin):
     publisher = db.relationship('Publisher', cascade="all,delete", back_populates='books')
 
     serialize_rules=('-author.books', '-publisher.books')
+
+    def to_dict(self):
+        return {
+            'id': self.id, 
+            'title': self.title,
+            'page_count': self.page_count,
+            'author_name': self.author.name,
+            'publisher_name': self.publisher.name
+        }
 
 
     @validates('page_count')
