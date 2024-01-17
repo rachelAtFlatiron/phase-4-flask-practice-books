@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 flask = "2.2.2"
-flask-sqlalchemy = "2.5.1"
+flask-sqlalchemy = "3.0.2"
 flask-migrate = "3.1.0"
 pytest = "7.1.3"
 importlib-metadata = "6.0.0"
@@ -16,6 +16,7 @@ jsonify = "0.5"
 sqlalchemy-serializer = "1.4.1"
 flask-cors = "*"
 flask-restful = "*"
+Werkzeug="2.2.2"
 
 [dev-packages]
 
