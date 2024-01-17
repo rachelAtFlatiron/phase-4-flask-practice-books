@@ -39,7 +39,7 @@ class Publisher(db.Model, SerializerMixin):
     books = db.relationship('Book', back_populates='publisher')
     authors = association_proxy('books', 'author')
 
-    serialize_rules = ('-books.publisher', '-authors.publishers')
+    serialize_rules = ('-books.publisher',)
 
     @validates('founding_year')
     def validates_year(self, key, value):
